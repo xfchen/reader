@@ -10,9 +10,9 @@ services:
     container_name: reader #容器名 可自行修改
     restart: always
     ports:
-      - 8080 #4396端口映射可自行修改
-    networks:
-      - reader-network
+      - 8080:8080 #4396端口映射可自行修改
+#    networks:
+#      - reader-network
     volumes:
       - "reader-logs:/logs" #log映射目录 /home/reader/logs 映射目录可自行修改
       - "reader-storage:/storage" #数据映射目录 /home/reader/storage 映射目录可自行修改
@@ -46,24 +46,25 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: reader watchtower --cleanup --schedule "0 0 4 * * *"
-    networks:
-      - reader-network
+#    networks:
+#     - reader-network
     # 仅更新reader与watchtower容器,如需其他自行添加 '容器名' ,如:reader watchtower nginx
     # --cleanup 更新后清理旧版本镜像
     # --schedule 自动检测更新 crontab定时(限定6位crontab) 此处代表凌晨4点整
 
   cloudflared:
-    image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run
-    environment:
-       - TUNNEL_TOKEN=${CF_TOKEN}
-    restart: unless-stopped
-    networks:
-      - reader-network
+
+#   image: cloudflare/cloudflared:latest
+#   command: tunnel --no-autoupdate run
+#    environment:
+#       - TUNNEL_TOKEN=${CF_TOKEN}
+#    restart: unless-stopped
+#    networks:
+#      - reader-network
     
 volumes:
     reader-logs:
     reader-storage:
-networks:
-  reader-network: 
-    driver: bridge
+#networks:
+#  reader-network: 
+#    driver: bridge
