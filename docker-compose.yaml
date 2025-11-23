@@ -52,7 +52,7 @@ services:
     # --cleanup 更新后清理旧版本镜像
     # --schedule 自动检测更新 crontab定时(限定6位crontab) 此处代表凌晨4点整
 
-  cloudflared:
+#  cloudflared:
 
 #   image: cloudflare/cloudflared:latest
 #   command: tunnel --no-autoupdate run
